@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='doPobrania', pageTitle='Do pobrania'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+        <center>
+            <br> <br>
+            <div id="formularz">
+                <h1 class="nagl"> Do pobrania: </h1> <br/> <br/> <br/>
+
+                <form></form>
+
+                <form th:action="@{/dodajZalacznik}" method="post" enctype="multipart/form-data" sec:authorize="hasRole('ADMIN')">
+                    <input class="form-control" type="text" required name="nazwa" placeholder="Nazwa pliku"> <br/> <br/>
+                    <input class="form-control" type="file" required name="multipartFile" accept=".pdf"> <br/> <br/>
+                    <input type="submit" class="btn btn-primary mb-2" value="Dodaj">
+                </form>
+
+                <br/> <br/>
+                <table class="szczegoly">
+                    <tr> <th> Nazwa </th> <th> Pobierz </th> </tr>
+                    <tr th:each="z : ${zalaczniki}">
+                        <td th:text="${z.nazwa}"> </td>
+                        <td>
+                            <a th:href="@{/downloadFile(id=${z.id})}"> <img src="pdf_icon.png/" height="40px"> </a>
+                        </td>
+                    </tr>
+                </table>
+
+                <br/>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

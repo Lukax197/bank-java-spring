@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>ERROR 403</title>
+</head>
+<body>
+
+<div>
+    <center>
+    <h1>403 - Odmowa dostępu</h1>
+    <div>
+        <div>Witaj <span sec:authentication="principal.username"/>!
+            nie masz odpowiednich praw dostępu do żądanej strony.
+        </div>
+        <br> <br>
+        <a href="/"> Powrót do strony głównej </a>
+    </div>
+    </center>
+</div>
+
+</body>
+</html>

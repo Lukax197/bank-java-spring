@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<body>
+<div th:fragment="header-css">
+  <!-- this is header-css -->
+  <link rel="stylesheet" type="text/css"
+        th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css"
+        th:href="@{style.css}"/>
+
+  <script th:src="@{/webjars/popper.js/ 2.9.3/popper.js}"></script>
+  <script th:src="@{../webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</div>
+
+<div th:fragment="menu(pageName)">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav1">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="/"> <img class="logo" src="logo.png"/> </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'dodajKlienta'}? ' active'" th:href="@{../add}" sec:authorize="!isAuthenticated()"> Otwórz konto osobiste </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'listaKlientow'}? ' active'" th:href="@{../klientList}" sec:authorize="hasRole('ADMIN')"> Lista klientów </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'przelew'}? ' active'" th:href="@{../przelew}" sec:authorize="hasRole('USER')"> Wykonaj przelew </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'historiaOper'}? ' active'" th:href="@{../historiaOper}" sec:authorize="hasRole('USER')"> Historia operacji </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'kontakty'}? ' active'" th:href="@{../kontakty}" sec:authorize="hasRole('USER')"> Kontakty </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'profil'}? ' active'" th:href="@{../profil}" sec:authorize="hasRole('USER')"> Profil </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'przelewyList'}? ' active'" th:href="@{../przelewyList}" sec:authorize="hasRole('ADMIN')"> Lista przelewów </a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${pageName eq 'doPobrania'}? ' active'" th:href="@{../doPobrania}"> Do pobrania </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav2">
+      <div class="container-fluid">
+        <ul class="navbar-nav my-2 my-lg-0" sec:authorize="isAuthenticated()">
+          <li class="nav-item">
+            <p style="color: white;"> Witaj <span sec:authentication="name"/>! </span> </p>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav my-2 my-lg-0" sec:authorize="isAuthenticated()">
+          <li class="nav-item">
+            <a href="#" class="btn btn-danger" onclick="document.getElementById('logout').submit()"> <i class='fas fa-sign-out-alt'></i> Wyloguj się! </a>
+            <form th:action="@{/logout}" id="logout" th:method="post" style="display: none;"/>
+          </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0" sec:authorize="!isAuthenticated()">
+          <li class="nav-item">
+            <a href="/login" class="btn btn-success" th:classappend="${pageName eq 'login'}? ' active'"> <i class='fas fa-sign-in-alt'></i> Zaloguj się! </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  </nav>
+</div>
+
+<div th:fragment="footer" style="padding: 10px;">
+  <footer>
+    © 2022 Platformy programowania <br>
+    <div sec:authorize="isAuthenticated()">
+      <!-- Wyświetlenie tablicy ról przypisanych do użytkownika -->
+      Rola: <span th:each="role: ${#authentication.getAuthorities()}">
+       <span th:text="${role}"/>
+   </span>
+    </div>
+  </footer>
+</div>
+</body>
+
+</html>

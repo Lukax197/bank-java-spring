@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='dodajKlienta', pageTitle='Otwórz konto'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 80%;">
+        <center> <h1 class="nagl" th:text="${klient.id == 0}? 'Otwórz konto osobiste' : 'Edytuj dane'"></h1>
+            <br> <br> <br>
+            <div id="formularz">
+                <center>
+                    <form th:action="@{/add}" method="post" th:object="${klient}"></form>
+
+                    <form th:action="@{/add}" method="post" th:object="${klient}">
+                        <i> Dane klienta </i> </br> </br>
+                        <input type="hidden" name="id" th:value="${klient.id}"/>
+                        <input type="text" class="form-control" th:field="*{imie}" required name="imie" placeholder="Imie">
+                        <p style="color: red;" th:if="${#fields.hasErrors('imie')}" th:each="err : ${#fields.errors('imie')}" th:text="${err}"></p> <br>
+                        <input type="text" class="form-control" th:field="*{nazwisko}" required placeholder="Nazwisko">
+                        <p style="color: red;" th:if="${#fields.hasErrors('nazwisko')}" th:each="err : ${#fields.errors('nazwisko')}" th:text="${err}"></p> <br>
+                        <input type="text" class="form-control" th:field="*{adres_zamieszkania}" required placeholder="Adres zamieszkania">
+                        <p style="color: red;" th:if="${#fields.hasErrors('adres_zamieszkania')}" th:each="err : ${#fields.errors('adres_zamieszkania')}" th:text="${err}"></p> <br>
+                        <input type="date" class="form-control" th:field="*{data_urodzenia}" required placeholder="Data urodzenia">
+                        <p style="color: red;" th:if="${#fields.hasErrors('data_urodzenia')}" th:each="err : ${#fields.errors('data_urodzenia')}" th:text="${err}"></p> <br>
+                        <select class="form-control" required th:field="*{kategoria}">
+                            <option value=""> ------- Wybierz typ klienta ------- </option>
+                            <option th:each="kat : ${kategorie}" th:value="${kat.id}" th:text="${kat.nazwa}"> </option>
+                        </select> <br/>
+                        <div style="text-align: left;"> Usługi: </div>
+                        <div style="text-align: left;" th:each="usl : ${uslugi}">
+                            <input class="form-check-input" type="checkbox" th:field="*{konto.uslugi}" th:value="${usl.id}">
+                            <label class="form-check-label" th:text="${usl.name}"/>
+                        </div> <br/>
+                        <div th:if="${klient.id != 0}">
+                            <input class="form-check-input" type="checkbox" th:field="*{aktywny}">
+                            <label class="form-check-label"> Aktywny </label>
+                        </div>
+                        </br>
+                        <hr/>
+                        <i> Dane do logowania </i> </br> </br>
+                        <input class="form-control" type="text" th:field="*{internetBankingAccount.username}" required placeholder="Nazwa użytkownika">
+                        <p style="color: red;" th:if="${#fields.hasErrors('internetBankingAccount.username')}" th:each="err : ${#fields.errors('internetBankingAccount.username')}" th:text="${err}"></p> <br>
+                        <input class="form-control" type="email" th:field="*{internetBankingAccount.email}" required placeholder="Adres e-mail">
+                        <p style="color: red;" th:if="${#fields.hasErrors('internetBankingAccount.email')}" th:each="err : ${#fields.errors('internetBankingAccount.email')}" th:text="${err}"></p> <br>
+                        <input class="form-control" type="password" th:field="*{internetBankingAccount.password}" required placeholder="Hasło">
+                        <p style="color: red;" th:if="${#fields.hasErrors('internetBankingAccount.password')}" th:each="err : ${#fields.errors('internetBankingAccount.password')}" th:text="${err}"></p> <br>
+                        <input class="form-control" type="password" th:field="*{internetBankingAccount.passwordConfirm}" required placeholder="Powrórz hasło">
+                        <p style="color: red;" th:if="${#fields.hasErrors('internetBankingAccount.passwordConfirm')}" th:each="err : ${#fields.errors('internetBankingAccount.passwordConfirm')}" th:text="${err}"></p> </br>
+                        <input type="submit" class="btn btn-primary mb-2" th:value="${klient.id == 0}? 'Otwórz konto' : 'Zmień dane'"/>
+                    </form>
+                </center>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

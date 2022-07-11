@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='przelewyList', pageTitle='Lista przelewów'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+        <center>
+            <br> <br>
+            <div id="logForm">
+                <h1 class="nagl"> Przelewy: </h1> <br/> <br/> <br/>
+
+                <form></form>
+
+                <i> Przelewy oczekujące </i>
+                <table class="szczegoly">
+                    <tr> <th> Odbiorca Nazwa </th> <th> Numer konta </th> <th> Tytuł </th> <th> Status </th> <th> Operacje </th> </tr>
+                    <tr th:each="o : ${oczekujace}">
+                        <td th:text="${o.odbiorca_nazwa}"> </td>
+                        <td th:text="${o.nr_konta_odbiorcy}"> </td>
+                        <td th:text="${o.tytul}"> </td>
+                        <td th:text="${o.status}"> </td>
+                        <td> <a class="btn btn-success" th:href="@{/potwierdzPrzelew(id=*{o.id})}"> Potwierdź </a> </td>
+                    </tr>
+                </table>
+                <br/> <br/>
+                <i> Przelewy potwierdzone </i>
+                <table class="szczegoly">
+                    <tr> <th> Odbiorca Nazwa </th> <th> Numer konta </th> <th> Tytuł </th> <th> Status </th> </tr>
+                    <tr th:each="p : ${potwierdzone}">
+                        <td th:text="${p.odbiorca_nazwa}"> </td>
+                        <td th:text="${p.nr_konta_odbiorcy}"> </td>
+                        <td th:text="${p.tytul}"> </td>
+                        <td th:text="${p.status}"> </td>
+                    </tr>
+                </table>
+                <br/>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

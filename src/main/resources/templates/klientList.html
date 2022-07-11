@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='listaKlientow', pageTitle='Lista klientow'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 80%;">
+        <center>
+            <br/> <br/>
+        <div style="background-color: #eee; padding: 10px; width: 1100px;">
+        <center> <h1 class="nagl"> Lista klientów </h1>
+            <form></form>
+            <br> <br> <br>
+            <i> Wyszukaj: </i> <br/> <br/>
+            <form th:action="@{/wyszukaj}" method="get" th:object="${filter}">
+                <input type="text" th:field="*{phase}" placeholder="Imie, nazwisko..."> <br/> <br/>
+                <input type="checkbox" th:field="*{active}">
+                <label> Czy aktywny </label> <br/> <br/>
+                <select th:field="*{kategoria}">
+                    <option value="0"> Wybierz kategorię </option>
+                    <option th:each="kat : ${kategorie}" th:value="${kat.id}" th:text="${kat.nazwa}"> </option>
+                </select> <br/> <br/>
+                <input class="btn btn-primary mb-2" type="submit" value="Wyszukaj">
+            </form> <br/>
+            <button class="btn btn-warning" onclick="location.href='/klientList'"> Reset </button>
+            <br/> <br/>
+            <p th:if="${parameters} != null"> Parametry: <label th:text="${parameters}">  </label> </p>
+            <br/>
+            <div id="tabela">
+                <center>
+                    <table id="tab">
+                        <tr> <th> Imie </th>
+                            <th> Nazwisko </th>
+                            <th> Adres zamieszkania </th>
+                            <th> Data urodzenia </th>
+                            <th> Aktywny </th>
+                            <th> Kategoria </th>
+                            <th colspan="4"> Opcje </th>
+                        </tr>
+                        <tr th:each="b:${klient}">
+                            <td th:text="${b.imie}" />
+                            <td th:text="${b.nazwisko}" />
+                            <td th:text="${b.adres_zamieszkania}" />
+                            <td th:text="${b.data_urodzenia}" />
+                            <td th:text="${b.aktywny}" />
+                            <td th:text="${b.kategoria.getNazwa()}" /></td>
+                            <td> <a class="btn btn-info" th:href="@{/details(id=*{b.id})}"> Szczegóły </a></td>
+                            <td> <a class="btn btn-warning" th:href="@{/edit(id=*{b.id})}"> Edytuj </a>  </td>
+                            <td> <a class="btn btn-danger" th:href="@{/klientList(did=*{b.id})}"> Usuń </a> </td>
+                            <td> <a class="btn btn-success" th:href="@{/wplac(id=*{b.id})}"> Wpłać </a> </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+                <br/> <br/>
+        </center>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='profil', pageTitle='Profil'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+        <center>
+            <br> <br>
+            <div id="formularz" th:object="${klient}">
+                <h1 class="nagl"> Profil: </h1> <br/> <br/> <br/>
+                <table class="szczegoly">
+                    <tr> <th> Numer konta </th> <td> <span th:text="*{konto.nr_konta}"></span> </td> </tr>
+                    <tr> <th> Pin </th> <td> <span th:text="*{konto.pin}"></span> </td> </tr>
+                    <tr> <th> Saldo </th> <td> <span th:text="*{konto.saldo}"></span> </td> </tr>
+                </table>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

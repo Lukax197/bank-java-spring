@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='przelew', pageTitle='Wykonaj przelew'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+
+    <script type="text/javascript">
+        function change() {
+            var e = document.getElementById("sel").value;
+            const words = e.split(';');
+
+            if(e == "--- Wybierz kontakt ---") {
+                document.getElementById('nr_konta').value = "";
+                document.getElementById('nazwa').value = "";
+            }
+            else {
+                document.getElementById('nr_konta').value = words[1];
+                document.getElementById('nazwa').value = words[0];
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+    <center>
+        <br> <br>
+        <div id="formularz">
+            <h1 class="nagl"> Wykonaj przelew: </h1> <br/> <br/> <br/>
+            <p style="border: black 2px solid; padding: 10px; width: 200px;"> <b> Aktualne saldo wynosi: </b> <label th:text="${konto.saldo}"></label> </p>
+            <form></form>
+            <p style="color: red;" th:if="${#request.getParameter('err') != null and #request.getParameter('err') == 'true'}"> Brak wystarczających środków!</p>
+            <br/>
+            <form th:action="@{/przelew}" method="post" th:object="${przelew}">
+                <select id="sel" class="form-control" onclick="change()">
+                    <option> --- Wybierz kontakt --- </option>
+                    <option th:each="kon : ${kontakty}" th:text="${kon.nazwa} + ';' + ${kon.nr_konta}">  </option>
+                </select> <br/>
+                <input class="form-control" id="nazwa" type="text" required th:field="*{odbiorca_nazwa}" placeholder="Nazwa odbiorcy">
+                <p style="color: red;" th:if="${#fields.hasErrors('odbiorca_nazwa')}" th:each="err : ${#fields.errors('odbiorca_nazwa')}" th:text="${err}"></p><br/>
+                <input class="form-control" type="text" id="nr_konta" required th:field="*{nr_konta_odbiorcy}" placeholder="Numer konta odbiorcy">
+                <p style="color: red;" th:if="${#fields.hasErrors('nr_konta_odbiorcy')}" th:each="err : ${#fields.errors('nr_konta_odbiorcy')}" th:text="${err}"></p><br/>
+                <input class="form-control" type="number" required th:field="*{kwota}" placeholder="Wpisz kwotę">
+                <p style="color: red;" th:if="${#fields.hasErrors('kwota')}" th:each="err : ${#fields.errors('kwota')}" th:text="${err}"></p><br/>
+                <input class="form-control" type="text" required th:field="*{tytul}" placeholder="Tytuł">
+                <p style="color: red;" th:if="${#fields.hasErrors('tytul')}" th:each="err : ${#fields.errors('tytul')}" th:text="${err}"></p><br/>
+                <input class="btn btn-primary mb-2" type="submit" value="Wyślij"/>
+            </form>
+
+            <br/>
+        </div>
+    </center>
+    </article>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='kontakty', pageTitle='Kontakty'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#zwin").hide();
+            $("#addKontaktForm").hide();
+
+            $("#rozwin").click(function() {
+                $(this).hide();
+                $("#addKontaktForm").show();
+                $("#zwin").show();
+            });
+
+            $("#zwin").click(function() {
+                $(this).hide();
+                $("#addKontaktForm").hide();
+                $("#rozwin").show();
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+    <center>
+        <br> <br>
+        <div id="logForm">
+            <form></form>
+            <h1 class="nagl"> Kontakty: </h1> <br/> <br/> <br/>
+            <button id="rozwin">Rozwiń</button>
+            <button id="zwin">Zwiń</button> <br/> <br/>
+            <div id="addKontaktForm" style="width: 300px;">
+                <i>Dodaj kontakt: </i> <br/> <br/>
+                <form th:action="@{/kontakty}" method="post" th:object="${kontakt}">
+                    <input class="form-control" type="text" required th:field="*{nazwa}" placeholder="Nazwa kontaktu">
+                    <p style="color: red;" th:if="${#fields.hasErrors('nazwa')}" th:each="err : ${#fields.errors('nazwa')}" th:text="${err}"></p><br/>
+                    <input class="form-control" type="text"required th:field="*{nr_konta}" placeholder="Numer konta">
+                    <p style="color: red;" th:if="${#fields.hasErrors('nr_konta')}" th:each="err : ${#fields.errors('nr_konta')}" th:text="${err}"></p><br/>
+                    <input class="btn btn-primary mb-2" type="submit" value="Dodaj kontakt"/>
+                </form>
+            </div>
+            <br/>
+            <table class="szczegoly">
+                <tr> <th> Nazwa kontaktu </th> <th> Numer konta </th> </tr>
+                <tr th:each="k : ${kontaktyList}">
+                    <td th:text="${k.nazwa}"> </td>
+                    <td th:text="${k.nr_konta}"> </td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+    </center>
+    </article>
+</div>
+</body>
+
+</html>

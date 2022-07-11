@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='przelew', pageTitle='Wykonaj przelew'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 825px;">
+        <center>
+            <br> <br>
+            <div id="formularz">
+                <h1 class="nagl"> Wykonaj wpłatę: </h1> <br/> <br/> <br/>
+
+                <form></form>
+
+                <form th:action="@{/wplac(id=${id})}" method="post">
+                    <input class="form-control" type="number" name="kwota" required placeholder="Kwota">
+                    <br/>
+                    <input class="btn btn-primary mb-2" type="submit" value="Wpłać"/>
+                </form>
+                <br/>
+            </div>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

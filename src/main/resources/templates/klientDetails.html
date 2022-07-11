@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='klientDetails', pageTitle='Szczegóły'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>[[${pageTitle}]]</title>
+</head>
+
+<body>
+<div layout:fragment="custom-content">
+    <article style="height: 850px">
+        <center> <h1 class="nagl"> Szczegóły </h1>
+            <br> <br> <br>
+            <div th:object="${klient}">
+                <h5 class="nagl"> Dane klienta </h5> <br/> <br/>
+                <table class="szczegoly">
+                    <tr> <th> Imie </th> <td> <span th:text="*{imie}"></span> </td> </tr>
+                    <tr> <th> Nazwisko </th> <td> <span th:text="*{nazwisko}"></span> </td> </tr>
+                    <tr> <th> Adres zamieszkania </th> <td> <span th:text="*{adres_zamieszkania}"></span> </td> </tr>
+                    <tr> <th> Data urodzenia </th> <td> <span th:text="*{data_urodzenia}"></span> </td> </tr>
+                    <tr> <th> Aktywny </th> <td> <span th:text="*{aktywny}"></span> </td> </tr>
+                </table>
+            </div>
+            <div th:object="${klient.konto}">
+                <h5 class="nagl"> Dane konta </h5> <br/> <br/>
+                <table class="szczegoly">
+                    <tr> <th> Numer konta </th> <td> <span th:text="*{nr_konta}"></span> </td> </tr>
+                    <tr> <th> Pin </th> <td> <span th:text="*{pin}"></span> </td> </tr>
+                    <tr> <th> Saldo </th> <td> <span th:text="*{saldo}"></span> </td> </tr>
+                    <tr> <th> Usługi </th>
+                        <td>
+                            <ul>
+                                <li th:each="usl : *{uslugi}" th:text="${usl.name}">  </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <a class="btn btn-info" href="/klientList"> Powrót </a>
+        </center>
+    </article>
+</div>
+</body>
+
+</html>

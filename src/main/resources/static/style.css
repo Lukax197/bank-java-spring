@@ -1,0 +1,102 @@
+#formularz{
+    background-color: #eee;
+    width: 430px;
+    padding: 30px;
+}
+
+#logForm{
+    background-color: #eee;
+    width: 720px;
+    padding: 30px;
+}
+
+.historia{
+    background-color: #eee;
+    width: 1000px;
+    padding: 30px;
+}
+
+.nagl{
+    position: relative;
+    top: 30px;
+    color: brown;
+    text-decoration: overline;
+}
+
+#tabela td{
+    padding: 10px;
+    border: 3px solid white;
+    background-color: gray;
+    color: white;
+}
+
+#tabela th{
+    padding: 10px;
+    border: 3px solid white;
+    color: white;
+    background-color: brown;
+}
+
+#tabela{
+    padding: 10px;
+    text-align: center;
+    /*width: 350px;*/
+}
+
+#tab{
+    width: 800px;
+    text-align: center;
+}
+
+article{
+    height: 750px;
+}
+
+footer{
+    text-align: center;
+}
+
+#zdj{
+    width: 800px;
+}
+
+.but{
+    color: #99CCFF;
+}
+
+.napis{
+    color: white;
+}
+
+.szczegoly td{
+    padding: 10px;
+    border: 3px solid white;
+    background-color: gray;
+    color: white;
+}
+
+.szczegoly th{
+    padding: 10px;
+    border: 3px solid white;
+    color: white;
+    background-color: brown;
+}
+
+.szczegoly{
+    padding: 10px;
+    text-align: center;
+}
+
+#nav2 {
+    width: 22%;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+#addKontaktForm {
+    border: 1px black solid;
+    padding: 20px;
+}
